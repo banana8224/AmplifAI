@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body, #__next { height: 100%; }
+
+body {
+  @apply bg-[color:var(--bg,#0D0F1A)] text-text;
+  --bg: theme(colors.background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.bg-grid {
+  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.card { @apply rounded-3xl bg-surface shadow-glow border border-white/5; }
+.card-muted { @apply rounded-3xl bg-surface-2 shadow-glow-blue border border-white/5; }
+.btn-primary { @apply inline-flex items-center gap-2 rounded-2xl px-4 py-2 bg-primary text-white hover:bg-primary/90 transition; }
+.input-dark { @apply bg-surface-3 border-white/10 text-white placeholder:text-text-muted focus:border-primary focus:ring-primary p-3; }
