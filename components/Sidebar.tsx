@@ -2,20 +2,20 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Sparkles, Wand2, LineChart, Settings, Home } from 'lucide-react';
-import { useState, useEffect } from 'react';
 import clsx from 'clsx';
+import { useWorkspace } from '@/context/WorkspaceContext';
 
 // Menu items grouped by workspace
 const amplifaiItems = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/dashboard', label: 'Dashboard', icon: LineChart },
-  { href: '/pipelines', label: 'Pipelines', icon: Wand2 }, // example
+  { href: '/pipelines', label: 'Pipelines', icon: Wand2 },
   { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
 const clarifaiItems = [
   { href: '/', label: 'Home', icon: Home },
-  { href: '/guided', label: 'User guides', icon: Sparkles },
+  { href: '/guided', label: 'Guided Mode', icon: Sparkles },
   { href: '/manual', label: 'Manual Mode', icon: Wand2 },
   { href: '/settings', label: 'Settings', icon: Settings },
 ];
@@ -23,24 +23,18 @@ const clarifaiItems = [
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const [workspace, setWorkspace] = useState<'amplifai' | 'clarifai'>('amplifai');
-
-  // Update body class on workspace change
-  useEffect(() => {
-    document.body.classList.remove('workspace-amplifai', 'workspace-clarifai');
-    document.body.classList.add(`workspace-${workspace}`);
-  }, [workspace]);
+  const { workspace, setWorkspace } = useWorkspace();
 
   const items = workspace === 'amplifai' ? amplifaiItems : clarifaiItems;
 
   const handleWorkspaceSwitch = (target: 'amplifai' | 'clarifai') => {
     setWorkspace(target);
-    router.push('/'); // default to Home
+    router.push('/'); // always return to Home after toggle
   };
 
   return (
-    <aside className="hidden md:flex w-64 flex-col border-r border-white/10 bg-surface/60 backdrop-blur-lg">
-      {/* Logo Switcher - each half width */}
+    <aside className="hidden md:flex w-64 flex-col border-r border-white/10 bg-surface backdrop-blur-lg">
+      {/* Two logos at the very top, each half width */}
       <div className="h-20 flex w-full border-b border-white/10">
         <button
           onClick={() => handleWorkspaceSwitch('amplifai')}
@@ -48,12 +42,9 @@ export default function Sidebar() {
             "flex-1 flex items-center justify-center",
             workspace === 'amplifai' ? "bg-white/10" : "hover:bg-white/5"
           )}
+          aria-label="Switch to AmplifAI"
         >
-          <img
-            src="/AmplifAI.png"
-            alt="AmplifAI"
-            className="h-10 w-auto"
-          />
+          <img src="/AmplifAI.png" alt="AmplifAI" className="h-10 w-auto" />
         </button>
         <button
           onClick={() => handleWorkspaceSwitch('clarifai')}
@@ -61,12 +52,9 @@ export default function Sidebar() {
             "flex-1 flex items-center justify-center",
             workspace === 'clarifai' ? "bg-white/10" : "hover:bg-white/5"
           )}
+          aria-label="Switch to ClarifAI"
         >
-          <img
-            src="/ClarifAI.png"
-            alt="ClarifAI"
-            className="h-10 w-auto"
-          />
+          <img src="/ClarifAI.png" alt="ClarifAI" className="h-10 w-auto" />
         </button>
       </div>
 
