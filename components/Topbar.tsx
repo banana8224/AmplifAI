@@ -7,7 +7,7 @@ export default function Topbar() {
   return (
     <div className="h-16 sticky top-0 z-40 backdrop-blur-xl border-b border-white/10 bg-background/60 flex items-center justify-between px-4 md:px-8">
       <div className="flex items-center gap-4 text-sm text-text-muted">
-        <img src="/logo-amplifai.png" alt="logo" className="w-8 h-8 rounded" />
+        <img src="/amplifai.png" alt="logo" className="w-8 h-8 rounded" />
         <div className="text-white/90 font-medium">AmplifAI Organization</div>
       </div>
       <div className="flex items-center gap-3">
