@@ -1,19 +1,65 @@
-
 'use client';
-import Link from 'next/link';
-import { Rocket } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Topbar() {
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+
   return (
-    <div className="h-16 sticky top-0 z-40 backdrop-blur-xl border-b border-white/10 bg-background/60 flex items-center justify-between px-4 md:px-8">
-      <div className="flex items-center gap-4 text-sm text-text-muted">
-        <img src="/amplifai.png" alt="logo" className="w-8 h-8 rounded" />
-        <div className="text-white/90 font-medium">AmplifAI Organization</div>
+    <header className="h-16 flex items-center justify-between px-6 border-b border-white/10 bg-surface">
+      {/* Left side - ideas for future */}
+      <div className="flex items-center gap-6 text-sm text-text-muted">
+        <a href="/about" className="hover:text-white">About</a>
+        <a href="/docs" className="hover:text-white">Docs</a>
+        <a href="/support" className="hover:text-white">Support</a>
       </div>
-      <div className="flex items-center gap-3">
-        <button className="rounded-2xl px-4 py-2 border border-white/10">Team</button>
-        <button className="btn-primary"><Rocket className="w-4 h-4" /> Get Started</button>
+
+      {/* Right side - Auth buttons */}
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => setShowSignup(true)}
+          className="px-3 py-1 rounded-lg bg-primary text-white hover:bg-primary/80"
+        >
+          Sign Up
+        </button>
+        <button
+          onClick={() => setShowLogin(true)}
+          className="px-3 py-1 rounded-lg border border-white/20 hover:bg-white/10"
+        >
+          Login
+        </button>
       </div>
-    </div>
+
+      {/* Login Modal */}
+      {showLogin && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
+          <div className="bg-surface p-6 rounded-xl w-80">
+            <h2 className="text-lg font-bold mb-4">Login</h2>
+            <form className="space-y-3">
+              <input type="email" placeholder="Email" className="w-full p-2 rounded bg-black/30 border border-white/10" />
+              <input type="password" placeholder="Password" className="w-full p-2 rounded bg-black/30 border border-white/10" />
+              <button type="submit" className="w-full py-2 bg-primary text-white rounded-lg">Login</button>
+            </form>
+            <button onClick={() => setShowLogin(false)} className="mt-3 text-xs text-text-muted">Close</button>
+          </div>
+        </div>
+      )}
+
+      {/* Signup Modal */}
+      {showSignup && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
+          <div className="bg-surface p-6 rounded-xl w-80">
+            <h2 className="text-lg font-bold mb-4">Sign Up</h2>
+            <form className="space-y-3">
+              <input type="text" placeholder="Name" className="w-full p-2 rounded bg-black/30 border border-white/10" />
+              <input type="email" placeholder="Email" className="w-full p-2 rounded bg-black/30 border border-white/10" />
+              <input type="password" placeholder="Password" className="w-full p-2 rounded bg-black/30 border border-white/10" />
+              <button type="submit" className="w-full py-2 bg-primary text-white rounded-lg">Sign Up</button>
+            </form>
+            <button onClick={() => setShowSignup(false)} className="mt-3 text-xs text-text-muted">Close</button>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }

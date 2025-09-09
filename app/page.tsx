@@ -1,32 +1,37 @@
-
-import Link from 'next/link'
+'use client';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const [workspace, setWorkspace] = useState<'amplifai' | 'clarifai'>('amplifai');
+
+  // Detect workspace from body class
+  useEffect(() => {
+    if (document.body.classList.contains('workspace-clarifai')) {
+      setWorkspace('clarifai');
+    } else {
+      setWorkspace('amplifai');
+    }
+  }, []);
+
+  if (workspace === 'clarifai') {
+    return (
+      <main className="p-8">
+        <h1 className="text-2xl font-bold text-primary">Welcome to ClarifAI</h1>
+        <p className="mt-2 text-text-muted">
+          This is the ClarifAI insights platform. From here you can access Guided
+          Mode, Manual Mode, and your insights dashboard.
+        </p>
+      </main>
+    );
+  }
+
   return (
-    <div className="max-w-6xl mx-auto text-center">
-      <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-        Welcome to <span className="text-primary">AmplifAI</span>
-      </h1>
-      <p className="mt-4 text-text-muted">
-        AI-assisted tooling to amplify your functional tests and speed up ICA readiness.
+    <main className="p-8">
+      <h1 className="text-2xl font-bold text-primary">Welcome to AmplifAI</h1>
+      <p className="mt-2 text-text-muted">
+        This is the AmplifAI test acceleration platform. From here you can explore
+        your Dashboard, Pipelines, and analytics.
       </p>
-
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Link href="/dashboard" className="card p-6 hover:scale-[1.01] transition">
-          <h3 className="text-xl font-semibold">Dashboard</h3>
-          <p className="mt-2 text-text-muted text-sm">View org usage and app readiness</p>
-        </Link>
-
-        <Link href="/guided" className="card p-6 hover:scale-[1.01] transition">
-          <h3 className="text-xl font-semibold">Guided Mode</h3>
-          <p className="mt-2 text-text-muted text-sm">AI-assisted ticket improvements and remediation</p>
-        </Link>
-
-        <Link href="/manual" className="card p-6 hover:scale-[1.01] transition">
-          <h3 className="text-xl font-semibold">Manual Mode</h3>
-          <p className="mt-2 text-text-muted text-sm">Manual workflows and approvals</p>
-        </Link>
-      </div>
-    </div>
-  )
+    </main>
+  );
 }
